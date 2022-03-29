@@ -14,3 +14,8 @@ Using this information we attempt to generate plots showing different actor's ra
 4. Install the **requests** library:
 `pip install requests`
 ### Running the code
+1. To obtain the json file which contains all the data, run obtain_data.py. It runs for a few minutes scraping different IMDb pages and writes the data to the imdb.json file.
+2. To visualize the data, run data_analysis.py. It creates all the plots and stores them in their respective folders:
+    * box-office-over-time-graphs
+    * genres-over-time-graphs
+    * rating-over-time-graphs
