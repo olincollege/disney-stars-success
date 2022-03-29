@@ -7,11 +7,11 @@ Using this information we attempt to generate plots showing different actor's ra
 ### Python Dependencies
 1. Install the **pandas** library:    
 `pip install pandas`
-2. Install the **matplotlib** library:
+2. Install the **matplotlib** library:   
 `pip install matplotlib`
-3. Install the **BeautifulSoup** library:
+3. Install the **BeautifulSoup** library:   
 `pip install beautifulsoup4`
-4. Install the **requests** library:
+4. Install the **requests** library:   
 `pip install requests`
 ### Running the code
 1. To obtain the json file which contains all the data, run obtain_data.py. It runs for a few minutes scraping different IMDb pages and writes the data to the imdb.json file.
