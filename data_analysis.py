@@ -276,7 +276,7 @@ def do_for_all(celeb, func, show_func):
 with open('imdb.json') as imdb_json:
     df = pd.DataFrame.from_dict(json.load(imdb_json), orient='index')
 celebs = df.transpose()
-# do_for_all(celebs, genres_over_career, show_genres_over_career)
-# do_for_all(celebs, box_office_over_time, show_box_office_over_time)
-# do_for_all(celebs, movie_ratings_over_time, show_movie_ratings_over_time)
-# print(show_highest_paid_actor(celebs))
+do_for_all(celebs, genres_over_career, show_genres_over_career)
+do_for_all(celebs, box_office_over_time, show_box_office_over_time)
+do_for_all(celebs, movie_ratings_over_time, show_movie_ratings_over_time)
+print(show_highest_paid_actor(celebs))
