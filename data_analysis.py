@@ -45,6 +45,7 @@ def genres_over_career(celeb, num):
                         show_genre[genre] = 1
                     else:
                         show_genre[genre] += 1
+    # sort by number of movies in genre
     sorted_genre = sorted(show_genre.items(), key=lambda kv: int(kv[1]))
     show_genre = dict(sorted_genre)
     return show_genre, celeb, num
@@ -77,6 +78,7 @@ def box_office_over_time(celeb, num):
                     box_office[movie[1]] = get_num(movie[2])
                 else:
                     box_office[movie[1]] += get_num(movie[2])
+    # sort the movie by year
     sorted_boxoffice = sorted(
         box_office.items(), key=lambda kv: int(kv[0].split("–")[0]))
     box_office = dict(sorted_boxoffice)
@@ -104,6 +106,8 @@ def movie_ratings_over_time(celeb, num):
     for movie in celeb.iloc[:, num]:
         if movie is not None:
             if movie[1] is not None and movie[-1] is not None:
+                # check if the year already exists in the dictionary
+                # and append the rating to that year's list if it does.
                 if movie[1] not in movie_year.keys():
                     if len(movie[1].split("–")) > 1:
                         movie_year[movie[1].split("–")[1]] = [float(movie[-1])]
@@ -115,8 +119,11 @@ def movie_ratings_over_time(celeb, num):
                             float(movie[-1]))
                     else:
                         movie_year[movie[1]].append(float(movie[-1]))
-
-    sorted_year = sorted(movie_year.items(), key=lambda kv: int(kv[0]))
+    # sort the dictionary by year
+    # take the release year incase of a TV show.
+    # for e.g. take 2013 incase of 2013-2018
+    sorted_year = sorted(movie_year.items(),
+                         key=lambda kv: int(kv[0].split("–")[0]))
     movie_year = dict(sorted_year)
     return movie_year, celeb, num
 
@@ -174,6 +181,8 @@ def show_box_office_over_time(box_office, celeb, num):
     plt.xticks(rotation=30, ha='right')
     plt.title(
         f"{celeb.columns[num].split(',')[0]}'s box office collections over the years")
+    # set max of y-axis limit to 1.1 times the highest earning movie
+    # so that plot scales properly
     plt.ylim((0, float(highest_box_office)*1.1))
     plt.ylabel("Money earned (USD)")
     plt.savefig(f"box-office-over-time-graphs/{num}.png")
@@ -268,6 +277,8 @@ def do_for_all(celeb, func, show_func):
         which saves plots for each actor into their respective folders.
 
     """
+    # celeb.shape[1] gives the number of columns
+    # or the total actors in the dataframe
     for num in range(0, celeb.shape[1]):
         actor_dict, actor, actor_num = func(celeb, num)
         show_func(actor_dict, actor, actor_num)
@@ -279,4 +290,5 @@ celebs = df.transpose()
 do_for_all(celebs, genres_over_career, show_genres_over_career)
 do_for_all(celebs, box_office_over_time, show_box_office_over_time)
 do_for_all(celebs, movie_ratings_over_time, show_movie_ratings_over_time)
+# prints the highest paid actor in the data
 print(show_highest_paid_actor(celebs))
